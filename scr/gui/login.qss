@@ -1,0 +1,103 @@
+/* ================= ROOT ================= */
+QDialog#loginRoot {
+    background-color: qlineargradient(
+        x1:0, y1:0, x2:1, y2:1,
+        stop:0 #1e232b,
+        stop:0.5 #2c3240,
+        stop:1 #181c23
+    );
+}
+
+/* ================= LEFT PANEL ================= */
+#leftLoginPanel {
+    background: transparent;
+}
+
+/* ================= RIGHT PANEL ================= */
+#rightLoginPanel {
+    background-color: rgba(255,255,255,0.97);
+    border-top-right-radius: 26px;
+    border-bottom-right-radius: 26px;
+}
+
+/* ================= TITULO IZQUIERDA ================= */
+#overlayTitle {
+    color: #ffffff; /* blanco porque el fondo es oscuro */
+    font-size: 42px;
+    font-weight: 900;
+}
+
+/* ================= TITULOS DERECHA ================= */
+#bigTitle {
+    color: #111111;
+    font-size: 36px;
+    font-weight: 900;
+}
+
+#subTitle {
+    color: #6b7280;
+    font-size: 15px;
+}
+
+/* ================= TITULO CARD ================= */
+#sectionTitle {
+    color: #111111;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+/* ================= CARD ================= */
+#formCard {
+    background-color: #ffffff;
+    border-radius: 28px;
+    border: 1px solid #e5e7eb;
+}
+
+/* ================= INPUTS ================= */
+QLineEdit {
+    background-color: #ffffff;
+    color: #111111;
+    border: 2px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 14px;
+    font-size: 15px;
+}
+
+QLineEdit:focus {
+    border: 2px solid #3b82f6;
+}
+
+/* ================= BOTON PRINCIPAL ================= */
+#primaryButton {
+    background-color: qlineargradient(
+        x1:0, y1:0, x2:1, y2:0,
+        stop:0 #1e293b,
+        stop:1 #020617
+    );
+    color: white;
+    border-radius: 20px;
+    padding: 16px;
+    font-weight: 800;
+}
+
+#primaryButton:hover {
+    background-color: #0f172a;
+}
+
+/* ================= BOTON SECUNDARIO ================= */
+#secondaryButton {
+    background-color: transparent;
+    color: #111111;
+    border-radius: 16px;
+    border: 2px solid #111111;
+    padding: 14px;
+}
+
+#secondaryButton:hover {
+    background-color: #f3f4f6;
+}
+QLabel {
+    color: #e2e8f0;
+    font-weight: 500;
+}
+
