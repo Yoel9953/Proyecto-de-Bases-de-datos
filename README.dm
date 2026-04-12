@@ -1,7 +1,3 @@
-Aquí tienes una versión más formal y limpia, sin emojis, lista para tu `README.md`:
-
----
-
 # Tienda de Videojuegos
 
 Aplicación de escritorio desarrollada en Python para la gestión integral de una tienda de videojuegos. El sistema permite administrar clientes, empleados, inventario de productos, categorías y ventas, además de incluir funcionalidades de respaldo de información.
