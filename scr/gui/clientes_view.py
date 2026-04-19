@@ -1,44 +1,82 @@
 from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QFormLayout,
-    QLineEdit, QPushButton, QTableWidget, QTableWidgetItem,
-    QMessageBox
+    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit,
+    QPushButton, QFrame, QTableWidget, QTableWidgetItem,
+    QMessageBox, QHeaderView
 )
 
 from scr.data_base import queries
 
 
 class ClientesView(QWidget):
-    def __init__(self) -> None:
+    def __init__(self):
         super().__init__()
+        self.selected_id = None
+        self.all_data = []
+        self.build_ui()
+        self.load_data()
 
-        main_layout = QVBoxLayout()
-        form_layout = QFormLayout()
-        buttons_layout = QHBoxLayout()
+    def build_ui(self):
+        root = QVBoxLayout(self)
+        root.setContentsMargins(20, 20, 20, 20)
+        root.setSpacing(18)
+
+        title = QLabel("Clientes")
+        title.setObjectName("moduleHeaderTitle")
+
+        subtitle = QLabel("Administra y consulta los registros de clientes")
+        subtitle.setObjectName("moduleHeaderSubtitle")
+
+        self.search_input = QLineEdit()
+        self.search_input.setPlaceholderText("Buscar por nombre, apellido, correo o teléfono...")
+        self.search_input.setObjectName("moduleSearch")
+        self.search_input.textChanged.connect(self.filter_data)
+
+        form_card = QFrame()
+        form_card.setObjectName("moduleCard")
+        form_layout = QVBoxLayout(form_card)
+        form_layout.setSpacing(12)
 
         self.nombre_input = QLineEdit()
+        self.nombre_input.setPlaceholderText("Nombre")
+
         self.apellido_input = QLineEdit()
+        self.apellido_input.setPlaceholderText("Apellido")
+
         self.correo_input = QLineEdit()
+        self.correo_input.setPlaceholderText("Correo")
+
         self.telefono_input = QLineEdit()
+        self.telefono_input.setPlaceholderText("Teléfono")
 
-        form_layout.addRow("Nombre:", self.nombre_input)
-        form_layout.addRow("Apellido:", self.apellido_input)
-        form_layout.addRow("Correo:", self.correo_input)
-        form_layout.addRow("Teléfono:", self.telefono_input)
+        form_layout.addWidget(self.nombre_input)
+        form_layout.addWidget(self.apellido_input)
+        form_layout.addWidget(self.correo_input)
+        form_layout.addWidget(self.telefono_input)
 
-        self.add_button = QPushButton("Agregar")
-        self.update_button = QPushButton("Actualizar")
-        self.delete_button = QPushButton("Eliminar")
-        self.clear_button = QPushButton("Limpiar")
+        actions = QHBoxLayout()
 
-        self.add_button.clicked.connect(self.add_cliente)
-        self.update_button.clicked.connect(self.update_cliente)
-        self.delete_button.clicked.connect(self.delete_cliente)
-        self.clear_button.clicked.connect(self.clear_form)
+        btn_add = QPushButton("Agregar")
+        btn_add.setObjectName("primary")
+        btn_add.clicked.connect(self.add_record)
 
-        buttons_layout.addWidget(self.add_button)
-        buttons_layout.addWidget(self.update_button)
-        buttons_layout.addWidget(self.delete_button)
-        buttons_layout.addWidget(self.clear_button)
+        btn_update = QPushButton("Actualizar")
+        btn_update.clicked.connect(self.update_record)
+
+        btn_delete = QPushButton("Eliminar")
+        btn_delete.setObjectName("danger")
+        btn_delete.clicked.connect(self.delete_record)
+
+        btn_clear = QPushButton("Limpiar")
+        btn_clear.clicked.connect(self.clear_form)
+
+        actions.addWidget(btn_add)
+        actions.addWidget(btn_update)
+        actions.addWidget(btn_delete)
+        actions.addWidget(btn_clear)
+
+        table_card = QFrame()
+        table_card.setObjectName("moduleCard")
+        table_layout = QVBoxLayout(table_card)
 
         self.table = QTableWidget()
         self.table.setColumnCount(6)
@@ -46,79 +84,100 @@ class ClientesView(QWidget):
             "ID", "Nombre", "Apellido", "Correo", "Teléfono", "Fecha registro"
         ])
         self.table.cellClicked.connect(self.load_selected_row)
+        self.table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        self.table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
+        self.table.verticalHeader().setVisible(False)
+        self.table.horizontalHeader().setStretchLastSection(True)
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
 
-        main_layout.addLayout(form_layout)
-        main_layout.addLayout(buttons_layout)
-        main_layout.addWidget(self.table)
-        self.setLayout(main_layout)
+        table_layout.addWidget(self.table)
 
-        self.selected_id: int | None = None
-        self.load_data()
+        root.addWidget(title)
+        root.addWidget(subtitle)
+        root.addWidget(self.search_input)
+        root.addWidget(form_card)
+        root.addLayout(actions)
+        root.addWidget(table_card)
 
-    def load_data(self) -> None:
-        data = queries.get_clientes()
+    def load_data(self):
+        self.all_data = queries.get_clientes()
+        self.render_table(self.all_data)
+
+    def render_table(self, data):
         self.table.setRowCount(len(data))
+        for row, record in enumerate(data):
+            for col, value in enumerate(record):
+                self.table.setItem(row, col, QTableWidgetItem(str(value)))
 
-        for row_idx, row_data in enumerate(data):
-            for col_idx, value in enumerate(row_data):
-                self.table.setItem(row_idx, col_idx, QTableWidgetItem(str(value)))
+    def filter_data(self):
+        text = self.search_input.text().strip().lower()
+        if not text:
+            self.render_table(self.all_data)
+            return
 
-        self.table.resizeColumnsToContents()
+        filtered = [row for row in self.all_data if text in " ".join(map(str, row)).lower()]
+        self.render_table(filtered)
 
-    def load_selected_row(self, row: int, column: int) -> None:
+    def load_selected_row(self, row, column):
         self.selected_id = int(self.table.item(row, 0).text())
         self.nombre_input.setText(self.table.item(row, 1).text())
         self.apellido_input.setText(self.table.item(row, 2).text())
         self.correo_input.setText(self.table.item(row, 3).text())
         self.telefono_input.setText(self.table.item(row, 4).text())
 
-    def add_cliente(self) -> None:
+    def add_record(self):
         try:
             queries.add_cliente(
-                self.nombre_input.text().strip(),
-                self.apellido_input.text().strip(),
-                self.correo_input.text().strip(),
-                self.telefono_input.text().strip(),
+                self.nombre_input.text(),
+                self.apellido_input.text(),
+                self.correo_input.text(),
+                self.telefono_input.text()
             )
-            self.load_data()
-            self.clear_form()
             QMessageBox.information(self, "Éxito", "Cliente agregado correctamente.")
+            self.clear_form()
+            self.load_data()
         except Exception as e:
             QMessageBox.critical(self, "Error", str(e))
 
-    def update_cliente(self) -> None:
+    def update_record(self):
         if self.selected_id is None:
             QMessageBox.warning(self, "Aviso", "Selecciona un cliente.")
             return
-
         try:
             queries.update_cliente(
                 self.selected_id,
-                self.nombre_input.text().strip(),
-                self.apellido_input.text().strip(),
-                self.correo_input.text().strip(),
-                self.telefono_input.text().strip(),
+                self.nombre_input.text(),
+                self.apellido_input.text(),
+                self.correo_input.text(),
+                self.telefono_input.text()
             )
-            self.load_data()
-            self.clear_form()
             QMessageBox.information(self, "Éxito", "Cliente actualizado correctamente.")
+            self.clear_form()
+            self.load_data()
         except Exception as e:
             QMessageBox.critical(self, "Error", str(e))
 
-    def delete_cliente(self) -> None:
+    def delete_record(self):
         if self.selected_id is None:
             QMessageBox.warning(self, "Aviso", "Selecciona un cliente.")
             return
 
-        try:
-            queries.delete_cliente(self.selected_id)
-            self.load_data()
-            self.clear_form()
-            QMessageBox.information(self, "Éxito", "Cliente eliminado correctamente.")
-        except Exception as e:
-            QMessageBox.critical(self, "Error", str(e))
+        confirm = QMessageBox.question(
+            self,
+            "Confirmar",
+            "¿Seguro que deseas eliminar este cliente?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+        )
+        if confirm == QMessageBox.StandardButton.Yes:
+            try:
+                queries.delete_cliente(self.selected_id)
+                QMessageBox.information(self, "Éxito", "Cliente eliminado correctamente.")
+                self.clear_form()
+                self.load_data()
+            except Exception as e:
+                QMessageBox.critical(self, "Error", str(e))
 
-    def clear_form(self) -> None:
+    def clear_form(self):
         self.selected_id = None
         self.nombre_input.clear()
         self.apellido_input.clear()

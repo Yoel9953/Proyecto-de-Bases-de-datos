@@ -1,16 +1,26 @@
+
 QWidget {
     font-family: "Segoe UI", Arial;
     font-size: 13px;
+    color: #e2e8f0;
 }
 
 QMainWindow {
     background-color: #0f172a;
 }
 
-/* TABS */
+
+QLabel {
+    color: #e2e8f0;
+    font-weight: 500;
+}
+
+/* =========================
+   TABS
+========================= */
 QTabWidget::pane {
     border: none;
-    background: #0f172a;
+    background: transparent;
 }
 
 QTabBar::tab {
@@ -26,59 +36,315 @@ QTabBar::tab:selected {
     color: white;
 }
 
-/* INPUTS */
+/* =========================
+   INPUTS
+========================= */
 QLineEdit, QComboBox {
     background-color: #1e293b;
     color: #f1f5f9;
     border: 2px solid #334155;
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 10px;
 }
 
-QLineEdit:focus {
+QLineEdit:focus, QComboBox:focus {
     border: 2px solid rgba(37, 99, 235, 0.7);
 }
 
-/* BOTONES */
+/* =========================
+   BOTONES
+========================= */
 QPushButton {
-    background-color: #1e293b;
+    background-color: #3e7fe7;
     color: white;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 12px;
+    padding: 10px 14px;
     border: 1px solid #334155;
+    font-weight: 600;
 }
 
 QPushButton:hover {
-    background-color: #334155;
+    background-color: #4b8cf0;
 }
 
 QPushButton#primary {
     background-color: #2563eb;
+    color: white;
     border: none;
+}
+
+QPushButton#primary:hover {
+    background-color: #1d4ed8;
 }
 
 QPushButton#danger {
     background-color: #dc2626;
+    color: white;
     border: none;
 }
 
-/* TABLA */
+QPushButton#danger:hover {
+    background-color: #b91c1c;
+}
+
+/* =========================
+   TABLAS
+========================= */
 QTableWidget {
-    background-color: #0f172a;
+    background-color: #081226;
     color: white;
-    border: 1px solid #334155;
-    gridline-color: #334155;
+    border: 1px solid #24344d;
+    gridline-color: #2b3d59;
     selection-background-color: #2563eb;
+    selection-color: white;
+    border-radius: 14px;
+}
+
+QTableWidget::item {
+    background-color: #0b1730;
+    color: white;
+    padding: 6px;
+}
+
+QTableWidget::item:selected {
+    background-color: #2563eb;
+    color: white;
 }
 
 QHeaderView::section {
-    background-color: #1e293b;
+    background-color: #34224d;
     color: white;
-    padding: 8px;
+    padding: 10px;
     font-weight: bold;
     border: none;
 }
-QLabel {
-    color: #e2e8f0;
+
+QTableCornerButton::section {
+    background-color: #34224d;
+    border: none;
+}
+
+/* =========================
+   SCROLL
+========================= */
+QScrollBar:vertical {
+    background: #0f172a;
+    width: 10px;
+    border: none;
+}
+
+QScrollBar::handle:vertical {
+    background: #334155;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #475569;
+}
+
+QScrollBar:horizontal {
+    background: #0f172a;
+    height: 10px;
+    border: none;
+}
+
+QScrollBar::handle:horizontal {
+    background: #334155;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background: #475569;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+#dashboardPage {
+    background-color: #0f172a;
+}
+
+#dashboardMainTitle {
+    color: #f8fafc;
+    font-size: 54px;
+    font-weight: 900;
+}
+
+#dashboardMainSubtitle {
+    color: #cbd5e1;
+    font-size: 22px;
     font-weight: 500;
+}
+
+#dashboardContainer {
+    background-color: rgba(15, 23, 42, 0.35);
+    border: 1px solid #1f2937;
+    border-radius: 22px;
+}
+
+QPushButton#dashboardCard {
+    background-color: #14213d;
+    border: 2px solid #8b7355;
+    border-radius: 20px;
+    text-align: center;
+    padding: 14px;
+}
+
+QPushButton#dashboardCard:hover {
+    background-color: #1b2d52;
+    border: 2px solid #c8a96b;
+}
+
+#dashboardCardTitle {
+    color: #f8fafc;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+#dashboardCardSubtitle {
+    color: #cbd5e1;
+    font-size: 13px;
+}
+
+QPushButton#logoutCard {
+    background-color: #d91f1f;
+    color: white;
+    font-size: 30px;
+    font-weight: 900;
+    border-radius: 20px;
+    border: 2px solid #f59e0b;
+    padding: 20px;
+}
+
+QPushButton#logoutCard:hover {
+    background-color: #b91c1c;
+}
+
+/* =========================
+   PÁGINAS DE MÓDULO
+========================= */
+#modulePage {
+    background-color: #0f172a;
+}
+
+#moduleTitle {
+    color: #f8fafc;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+/* Encabezado estilo referencia */
+#moduleHeaderTitle {
+    color: #f8fafc;
+    font-size: 34px;
+    font-weight: 900;
+}
+
+#moduleHeaderSubtitle {
+    color: #cbd5e1;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Tarjetas de módulo, estilo más pro */
+#moduleCard {
+    background-color: rgba(11, 18, 32, 0.95);
+    border: 1px solid #22314a;
+    border-radius: 20px;
+    padding: 14px;
+}
+
+/* Barra de búsqueda brillante */
+#moduleSearch {
+    background-color: #111827;
+    color: white;
+    border: 2px solid #24447a;
+    border-radius: 14px;
+    padding: 12px 14px;
+    font-size: 15px;
+}
+
+#moduleSearch:focus {
+    border: 2px solid #3b82f6;
+}
+
+/* Inputs dentro del módulo */
+#moduleCard QLineEdit {
+    background-color: #111827;
+    color: white;
+    border: 1px solid #31435f;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 14px;
+}
+
+#moduleCard QLineEdit:focus {
+    border: 2px solid #3b82f6;
+}
+
+
+QMessageBox {
+    background-color: #0f172a;
+}
+
+QMessageBox QLabel {
+    color: #f8fafc;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+QMessageBox QPushButton {
+    background-color: #2563eb;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 16px;
+    min-width: 70px;
+}
+
+QMessageBox QPushButton:hover {
+    background-color: #1d4ed8;
+}
+#moduleHeaderTitle {
+    color: #f8fafc;
+    font-size: 34px;
+    font-weight: 900;
+}
+
+#moduleHeaderSubtitle {
+    color: #cbd5e1;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+#moduleCard {
+    background-color: rgba(11, 18, 32, 0.95);
+    border: 1px solid #22314a;
+    border-radius: 20px;
+    padding: 14px;
+}
+
+#moduleSearch {
+    background-color: #111827;
+    color: white;
+    border: 2px solid #24447a;
+    border-radius: 14px;
+    padding: 12px 14px;
+    font-size: 15px;
+}
+
+#moduleSearch:focus {
+    border: 2px solid #3b82f6;
+}
+
+#moduleCard QLineEdit {
+    background-color: #111827;
+    color: white;
+    border: 1px solid #31435f;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 14px;
+}
+
+#moduleCard QLineEdit:focus {
+    border: 2px solid #3b82f6;
 }
