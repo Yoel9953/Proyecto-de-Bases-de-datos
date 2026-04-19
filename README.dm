@@ -133,6 +133,3 @@ python main.py
 
 Este proyecto fue desarrollado con fines educativos, aplicando conceptos de programación en Python, diseño de interfaces gráficas, manejo de bases de datos y organización modular del software.
 
----
-
-Si quieres, te lo puedo hacer más “impactante” para portafolio (tipo reclutador) o incluso agregar sección de seguridad como a ti te gusta.
