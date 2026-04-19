@@ -4,11 +4,11 @@ from psycopg2.extensions import connection
 
 
 DB_CONFIG = {
-    "host": "localhost",
+    "host": "Tu nombre",
     "port": 5432,
-    "dbname": "tienda_videojuegos",
+    "dbname": "nombre_de_bases_de_datos",
     "user": "postgres",
-    "password": "Joel213CAL@"
+    "password": "ALAN I SEE YOU"
 }
 
 
